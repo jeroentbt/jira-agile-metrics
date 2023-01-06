@@ -212,16 +212,22 @@ def calculate_cycle_times(
                 issue, ["status", "Flagged"]
             ):
                 if snapshot.change == "status":
+                    to_string = None
+                    if snapshot.to_string:
+                        to_string = snapshot.to_string.lower()
+
                     snapshot_cycle_step = cycle_lookup.get(
-                        snapshot.to_string.lower(), None
+                        to_string, None
                     )
+
                     if snapshot_cycle_step is None:
                         logger.info(
                             "Issue %s transitioned to unknown JIRA status %s",
                             issue.key,
                             snapshot.to_string,
                         )
-                        unmapped_statuses.add(snapshot.to_string)
+                        if to_string is not None:
+                            unmapped_statuses.add(snapshot.to_string)
                         continue
 
                     last_status = (

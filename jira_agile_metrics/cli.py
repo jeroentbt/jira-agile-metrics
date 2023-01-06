@@ -246,3 +246,8 @@ def get_trello_client(connection, type_mapping):
         token = getpass.getpass("Token: ")
 
     return TrelloClient(username, key, token, type_mapping=type_mapping)
+
+
+if __name__ == "__main__":
+    main()
+
